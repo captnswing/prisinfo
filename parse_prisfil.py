@@ -33,3 +33,5 @@ if __name__ == '__main__':
         if not row['price']:
             continue
         print "{0:.<80s}{1:.>5.2f}kr".format(row['title'], float(row['price']))
+
+    print "\nparsed {0:d} products".format(i)
