@@ -7,16 +7,22 @@ import csv
 import StringIO
 import codecs
 from operator import itemgetter
+import argparse
+import sys
 
 
-def get_prisfil_csv():
+def get_prisfil_csv(cached=False):
     """
-    fetching prisfil data from specified url and save it to local cache file.
-    return prisfil data from local cache file.
+    fetches prisfil data from specified url and saves it to local cache file.
+    returns prisfil data from local cache file.
     """
-    if not os.path.exists(PRISFIL_CACHED):
+    if not cached or not os.path.exists(PRISFIL_CACHED):
         print "fetching prisfil from {0:s}...".format(PRISFIL_URL)
-        csvdata = urllib2.urlopen(PRISFIL_URL).read()
+        try:
+            csvdata = urllib2.urlopen(PRISFIL_URL).read()
+        except urllib2.URLError:
+            print "ERROR: cannot reach %s" % PRISFIL_URL
+            sys.exit(-1)
         with open(PRISFIL_CACHED, 'wb') as prisfil:
             prisfil.write(csvdata)
     else:
@@ -63,25 +69,19 @@ class UnicodeDictReader:
         return self
 
 
-def main():
-    csv_data = get_prisfil_csv()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--cached", help="use locally cached prisfil", action="store_true")
+    args = parser.parse_args()
+    csv_data = get_prisfil_csv(args.cached)
     reader = UnicodeDictReader(csv_data, delimiter='\t', quotechar='"')
     prisfil_data = []
     for i, row in enumerate(reader):
-        if i == 0:
-            print row.keys()
-            print
-        #if i > 10:
-        #    break
         if not row['price']:
             print row
-            continue
+            row['price'] = -1
         prisfil_data.append((row['title'], float(row['price'])))
     print "\nparsed {0:d} products".format(i)
 
     for t, p in sorted(prisfil_data, key=itemgetter(1)):
-        print u"{0:.<80s}{1:.>9.0f}kr".format(t, p)
-
-
-if __name__ == '__main__':
-    main()
+        print u"{0:.<90s}{1:.>10.0f}kr".format(t, p)
