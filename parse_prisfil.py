@@ -28,7 +28,7 @@ def get_prisfil_csv(cached=False):
     else:
         print "using cached prisfil '{0:s}'...".format(PRISFIL_CACHED)
         csvdata = open(PRISFIL_CACHED, 'rb').read()
-    return StringIO.StringIO(csvdata)
+    return StringIO.StringIO(csvdata.replace('\xc3"', '"'))
 
 
 # from https://gist.github.com/eightysteele/1174811
