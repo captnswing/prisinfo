@@ -28,7 +28,9 @@ def get_prisfil_csv(cached=False):
     else:
         print "using cached prisfil '{0:s}'...".format(PRISFIL_CACHED)
         csvdata = open(PRISFIL_CACHED, 'rb').read()
-    return StringIO.StringIO(csvdata.replace('\xc3"', '"'))
+    # get rid of corrupted characters. "UnicodeDecodeError, invalid continuation byte"
+    csvdata = csvdata.replace('\xc3"', '"')
+    return StringIO.StringIO(csvdata)
 
 
 # from https://gist.github.com/eightysteele/1174811
@@ -78,7 +80,6 @@ if __name__ == '__main__':
     prisfil_data = []
     for i, row in enumerate(reader):
         if not row['price']:
-            print row
             row['price'] = -1
         prisfil_data.append((row['title'], float(row['price'])))
     print "\nparsed {0:d} products".format(i)
