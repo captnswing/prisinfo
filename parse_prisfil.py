@@ -2,13 +2,14 @@
 #-*- coding: utf-8 -*-
 import os
 import urllib2
-from settings import *
 import csv
 import StringIO
 import codecs
 from operator import itemgetter
 import argparse
 import sys
+
+from settings import *
 
 
 def get_prisfil_csv(cached=False):
@@ -20,6 +21,8 @@ def get_prisfil_csv(cached=False):
         print "fetching prisfil from {0:s}...".format(PRISFIL_URL)
         try:
             csvdata = urllib2.urlopen(PRISFIL_URL).read()
+            # get rid of corrupted characters. "UnicodeDecodeError, invalid continuation byte"
+            csvdata = csvdata.replace('\xc3"', '"')
         except urllib2.URLError:
             print "ERROR: cannot reach %s" % PRISFIL_URL
             sys.exit(-1)
@@ -28,8 +31,6 @@ def get_prisfil_csv(cached=False):
     else:
         print "using cached prisfil '{0:s}'...".format(PRISFIL_CACHED)
         csvdata = open(PRISFIL_CACHED, 'rb').read()
-    # get rid of corrupted characters. "UnicodeDecodeError, invalid continuation byte"
-    csvdata = csvdata.replace('\xc3"', '"')
     return StringIO.StringIO(csvdata)
 
 
@@ -38,6 +39,7 @@ class UTF8Recoder:
     """
     Iterator that reads an encoded stream and reencodes the input to UTF-8
     """
+
     def __init__(self, f, encoding):
         self.reader = codecs.getreader(encoding)(f)
 
@@ -72,17 +74,23 @@ class UnicodeDictReader:
 
 
 if __name__ == '__main__':
+    # create argument and options parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--cached", help="use locally cached prisfil", action="store_true")
+    parser.add_argument("-c", "--cached", help="use locally cached prisfil",
+                        action="store_true")
     args = parser.parse_args()
+    # get csv data
     csv_data = get_prisfil_csv(args.cached)
+    # parse csv data
     reader = UnicodeDictReader(csv_data, delimiter='\t', quotechar='"')
+    # extract interesting fields
     prisfil_data = []
+    i = 0
     for i, row in enumerate(reader):
         if not row['price']:
             row['price'] = -1
         prisfil_data.append((row['title'], float(row['price'])))
+    # pretty print result
     print "\nparsed {0:d} products".format(i)
-
     for t, p in sorted(prisfil_data, key=itemgetter(1)):
         print u"{0:.<90s}{1:.>10.0f}kr".format(t, p)
