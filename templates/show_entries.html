@@ -1,0 +1,44 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Admin{% endblock %}
+
+{% block styles %}
+{{super()}}
+<style>
+    body {
+        padding-top: 70px;
+    }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Prisfil Admin</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <table class="table-condensed table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>namn</th>
+            <th>pris</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.0 }}</td>
+            <td>{{ "%.0fkr"|format(entry.1) }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
