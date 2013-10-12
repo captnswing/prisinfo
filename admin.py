@@ -18,7 +18,7 @@ Bootstrap(app)
 
 @app.route("/")
 def hello():
-    entries = get_prisfil_data(cached=True)
+    entries = sorted(get_prisfil_data(cached=True))
     return render_template('show_entries.html', entries=entries)
 
 if __name__ == "__main__":
