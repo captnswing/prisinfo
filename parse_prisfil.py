@@ -36,7 +36,7 @@ def get_prisfil_csv(reloading=False):
 # from https://gist.github.com/eightysteele/1174811
 class UTF8Recoder:
     """
-    Iterator that reads an encoded stream and reencodes the input to UTF-8
+    Iterator that reads an encoded stream and reencodes the input to UTF-8.
     """
 
     def __init__(self, f, encoding):
@@ -73,6 +73,10 @@ class UnicodeDictReader:
 
 
 def get_prisfil_data(*args):
+    """
+    parses the prisfil csv and extracts the interesting fields.
+    returns a list of tuples.
+    """
     # get csv data
     csv_data = get_prisfil_csv(*args)
     # parse csv data
@@ -92,9 +96,9 @@ if __name__ == '__main__':
     parser.add_argument("-r", "--reload", help="force reload of local cache file",
                         action="store_true")
     args = parser.parse_args()
-    # get data
+    # get prisfil data
     prisfil_data = get_prisfil_data(args.reload)
-    # pretty print result
+    # pretty print results
     print "\nparsed {0:d} products".format(len(prisfil_data))
     for t, p in sorted(prisfil_data, key=itemgetter(1)):
         print u"{0:.<90s}{1:.>10.0f}kr".format(t, p)
