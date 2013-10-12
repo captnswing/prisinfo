@@ -19,6 +19,19 @@
     <script src="{{ url_for('static', filename='jquery.tablesorter.widgets.min.js') }}"></script>
     <script>
         $(function () {
+            $.tablesorter.addParser({
+                id: 'sek',
+                is: function (s, table, cell) {
+                    return false;
+                },
+                format: function (s, table, cell, cellIndex) {
+                    return s.toLowerCase()
+                            .replace(/ /, '')
+                            .replace(/,/, '')
+                            .replace(/kr/, '');
+                },
+                type: 'numeric'
+            });
             $.extend($.tablesorter.themes.bootstrap, {
                 table: 'table table-bordered table-condensed table-striped',
                 header: 'bootstrap-header',
@@ -31,6 +44,7 @@
                 widthFixed: true,
                 headerTemplate: '{content} {icon}',
                 widgets: [ "uitheme", "filter", "zebra" ],
+                headers: { 1: { sorter: 'sek' } },
                 widgetOptions: {
                     zebra: ["even", "odd"]
                 }
