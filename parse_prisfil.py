@@ -85,7 +85,7 @@ def get_prisfil_data(*args):
     prisfil_data = []
     for i, row in enumerate(reader):
         if not row['price']:
-            row['price'] = -1
+            row['price'] = 1
         prisfil_data.append((row['title'], float(row['price'])))
     return prisfil_data
 
