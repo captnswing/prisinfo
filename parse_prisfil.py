@@ -12,12 +12,12 @@ import sys
 from settings import *
 
 
-def get_prisfil_csv(cached=False):
+def get_prisfil_csv(reloading=False):
     """
     fetches prisfil data from specified url and saves it to local cache file.
     returns prisfil data from local cache file.
     """
-    if not cached or not os.path.exists(PRISFIL_CACHED):
+    if reloading or not os.path.exists(PRISFIL_CACHED):
         print "fetching prisfil from {0:s}...".format(PRISFIL_URL)
         try:
             csvdata = urllib2.urlopen(PRISFIL_URL).read()
@@ -28,9 +28,8 @@ def get_prisfil_csv(cached=False):
             sys.exit(-1)
         with open(PRISFIL_CACHED, 'wb') as prisfil:
             prisfil.write(csvdata)
-    else:
-        print "using cached prisfil '{0:s}'...".format(PRISFIL_CACHED)
-        csvdata = open(PRISFIL_CACHED, 'rb').read()
+    with open(PRISFIL_CACHED, 'rb') as prisfil:
+        csvdata = prisfil.read()
     return StringIO.StringIO(csvdata)
 
 
@@ -73,9 +72,9 @@ class UnicodeDictReader:
         return self
 
 
-def get_prisfil_data(cached):
+def get_prisfil_data(*args):
     # get csv data
-    csv_data = get_prisfil_csv(cached)
+    csv_data = get_prisfil_csv(*args)
     # parse csv data
     reader = UnicodeDictReader(csv_data, delimiter='\t', quotechar='"')
     # extract interesting fields
@@ -90,11 +89,11 @@ def get_prisfil_data(cached):
 if __name__ == '__main__':
     # create argument and options parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--cached", help="use locally cached prisfil",
+    parser.add_argument("-r", "--reload", help="force reload of local cache file",
                         action="store_true")
     args = parser.parse_args()
     # get data
-    prisfil_data = get_prisfil_data(args.cached)
+    prisfil_data = get_prisfil_data(args.reload)
     # pretty print result
     print "\nparsed {0:d} products".format(len(prisfil_data))
     for t, p in sorted(prisfil_data, key=itemgetter(1)):

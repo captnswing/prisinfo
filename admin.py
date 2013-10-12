@@ -2,7 +2,9 @@
 #-*- coding: utf-8 -*-
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-from parse_prisfil import get_prisfil_data, UnicodeDictReader
+from parse_prisfil import get_prisfil_data
+import os
+from settings import PRISFIL_CACHED
 
 # configuration
 DEBUG = True
@@ -13,9 +15,10 @@ app.config.from_object(__name__)
 Bootstrap(app)
 
 @app.route("/")
-def hello():
-    entries = sorted(get_prisfil_data(cached=True))
-    return render_template('prisfil.html', entries=entries)
+def prisfil():
+    entries = sorted(get_prisfil_data())
+    prisfil_date = os.path.getmtime(PRISFIL_CACHED)
+    return render_template('prisfil.html', entries=entries, prisfil_date=prisfil_date)
 
 if __name__ == "__main__":
     app.run()
