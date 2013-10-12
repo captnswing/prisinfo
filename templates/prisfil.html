@@ -2,73 +2,77 @@
 {% block title %}Admin{% endblock %}
 
 {% block styles %}
-{{super()}}
-<style>
-    body {
-        padding-top: 70px;
-    }
-</style>
+    {{ super() }}
+    <style>
+        body {
+            padding-top: 70px;
+        }
+    </style>
 {% endblock %}
 
 {% block scripts %}
-{{super()}}
-<link rel="stylesheet" href="{{url_for('static', filename='theme.bootstrap.css')}}">
-<!-- tablesorter plugin -->
-<script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
-<!-- tablesorter widget file - loaded after the plugin -->
-<script src="{{url_for('static', filename='jquery.tablesorter.widgets.min.js')}}"></script>
-<script>
-    $(function () {
-        $.extend($.tablesorter.themes.bootstrap, {
-            table: 'table table-bordered table-condensed table-striped',
-            header: 'bootstrap-header',
-            sortNone: 'bootstrap-icon-unsorted',
-            sortAsc: 'icon-chevron-up glyphicon glyphicon-chevron-up',
-            sortDesc: 'icon-chevron-down glyphicon glyphicon-chevron-down'
-        });
-        $("table").tablesorter({
-            theme: 'bootstrap',
-            widthFixed: true,
-            headerTemplate: '{content} {icon}',
-            widgets: [ "uitheme", "filter", "zebra" ],
-            widgetOptions: {
-                zebra: ["even", "odd"]
-            }
-        });
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme.bootstrap.css') }}">
+    <!-- tablesorter plugin -->
+    <script src="{{ url_for('static', filename='jquery.tablesorter.min.js') }}"></script>
+    <!-- tablesorter widget file - loaded after the plugin -->
+    <script src="{{ url_for('static', filename='jquery.tablesorter.widgets.min.js') }}"></script>
+    <script>
+        $(function () {
+            $.extend($.tablesorter.themes.bootstrap, {
+                table: 'table table-bordered table-condensed table-striped',
+                header: 'bootstrap-header',
+                sortNone: 'bootstrap-icon-unsorted',
+                sortAsc: 'icon-chevron-up glyphicon glyphicon-chevron-up',
+                sortDesc: 'icon-chevron-down glyphicon glyphicon-chevron-down'
+            });
+            $("table").tablesorter({
+                theme: 'bootstrap',
+                widthFixed: true,
+                headerTemplate: '{content} {icon}',
+                widgets: [ "uitheme", "filter", "zebra" ],
+                widgetOptions: {
+                    zebra: ["even", "odd"]
+                }
+            });
 
-    });
-</script>
+        });
+    </script>
 {% endblock %}
 
 {% block navbar %}
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Prisfil Admin</a></li>
-            </ul>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Prisfil Admin</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <table class="tablesorter">
-        <thead>
-        <tr>
-            <th>Produkt</th>
-            <th>Pris</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for entry in entries %}
-        <tr>
-            <td>{{ entry.0 }}</td>
-            <td style="text-align: right;">{{ entry.1|format_currency }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <table class="tablesorter">
+                    <thead>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Pris</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entry in entries %}
+                        <tr>
+                            <td>{{ entry.0 }}</td>
+                            <td style="text-align: right;">{{ entry.1|format_currency }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
