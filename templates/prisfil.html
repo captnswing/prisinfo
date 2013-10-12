@@ -65,7 +65,7 @@
         {% for entry in entries %}
         <tr>
             <td>{{ entry.0 }}</td>
-            <td style="text-align: right;">{{ "%.0f kr"|format(entry.1) }}</td>
+            <td style="text-align: right;">{{ entry.1|format_currency }}</td>
         </tr>
         {% endfor %}
         </tbody>

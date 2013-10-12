@@ -20,5 +20,10 @@ def prisfil():
     prisfil_date = os.path.getmtime(PRISFIL_CACHED)
     return render_template('prisfil.html', entries=entries, prisfil_date=prisfil_date)
 
+def format_currency(value):
+    return '{:,.0f} kr'.format(value).replace(',', ' ')
+
+app.jinja_env.filters['format_currency'] = format_currency
+
 if __name__ == "__main__":
     app.run()
