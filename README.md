@@ -20,6 +20,7 @@ Then, check out the project code from github
 
 	cd ~/Development
 	git clone https://github.com/captnswing/prisinfo.git
+	pip install -r requirements.txt
 
 ## Update the code
 
@@ -28,6 +29,7 @@ In the Terminal
 	workon prisinfo
 	cd ~/Development/prisinfo
 	git pull
+	pip install -r requirements.txt
 
 ## Running the application
 
@@ -46,5 +48,5 @@ In the Terminal
 	workon prisinfo
 	cd ~/Development/prisinfo
 	python admin.py
-	
+
 Then, open a browser, and surf to [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
