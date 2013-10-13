@@ -15,17 +15,23 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 Bootstrap(app)
 
+
 @app.route("/")
 def prisfil():
     entries = sorted(get_prisfil_data())
     prisfil_date = time.ctime(os.path.getmtime(PRISFIL_CACHED))
-    return render_template('prisfil.html', entries=entries, prisfil_date=prisfil_date)
+    return render_template('prisfil.html', entries=entries,
+                           prisfil_date=prisfil_date)
 
-def format_currency(value):
-    return '{:,.0f} {:s}'.format(value, CURRENCY_SYMBOL)\
-                         .replace(',', CURRENCY_THOUSAND_SEPARATOR)
 
-app.jinja_env.filters['format_currency'] = format_currency
+@app.context_processor
+def utility_processor():
+    def format_price(amount, currency=CURRENCY_SYMBOL):
+        return u'{0:,.0f} {1}'.format(amount, currency) \
+            .replace(',', CURRENCY_THOUSAND_SEPARATOR)
+
+    return dict(format_price=format_price)
+
 
 if __name__ == "__main__":
     app.run()

@@ -82,7 +82,7 @@
                     {% for entry in entries %}
                         <tr>
                             <td>{{ entry.0 }}</td>
-                            <td style="text-align: right;">{{ entry.1|format_currency }}</td>
+                            <td style="text-align: right;">{{ format_price(entry.1) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
