@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-from parse_prisfil import get_prisfil_data
+from prisfilparser import get_prisfil_data
 import os
 from settings import PRISFIL_CACHED
 

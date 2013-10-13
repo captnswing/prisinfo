@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
+"""
+Prisfil Parser
+"""
 import os
 import urllib2
 import csv
@@ -8,7 +11,6 @@ import codecs
 from operator import itemgetter
 import argparse
 import sys
-
 from settings import *
 
 

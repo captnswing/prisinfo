@@ -33,13 +33,13 @@ In the Terminal
 
 ## Running the application
 
-### the script
+### the parser script
 
 In the Terminal
 
 	workon prisinfo
 	cd ~/Development/prisinfo
-	./parse_prisfil.py
+	./prisfilparser.py
 
 ### the admin GUI
 
