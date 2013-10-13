@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from prisfilparser import get_prisfil_data
 import os
-from settings import PRISFIL_CACHED
+from settings import PRISFIL_CACHED, CURRENCY_SYMBOL, CURRENCY_THOUSAND_SEPARATOR
 
 # configuration
 DEBUG = True
@@ -21,7 +21,8 @@ def prisfil():
     return render_template('prisfil.html', entries=entries, prisfil_date=prisfil_date)
 
 def format_currency(value):
-    return '{:,.0f} kr'.format(value).replace(',', ' ')
+    return '{:,.0f} {:s}'.format(value, CURRENCY_SYMBOL)\
+                         .replace(',', CURRENCY_THOUSAND_SEPARATOR)
 
 app.jinja_env.filters['format_currency'] = format_currency
 

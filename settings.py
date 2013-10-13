@@ -3,3 +3,5 @@
 
 PRISFIL_URL = "http://www.if-sakerhet.se/magento_prisfil.php"
 PRISFIL_CACHED = ".magento_prisfil.csv"
+CURRENCY_SYMBOL = 'kr'
+CURRENCY_THOUSAND_SEPARATOR = ' '
