@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from prisfilparser import get_prisfil_data
 import os
+import time
 from settings import PRISFIL_CACHED, CURRENCY_SYMBOL, CURRENCY_THOUSAND_SEPARATOR
 
 # configuration
@@ -17,7 +18,7 @@ Bootstrap(app)
 @app.route("/")
 def prisfil():
     entries = sorted(get_prisfil_data())
-    prisfil_date = os.path.getmtime(PRISFIL_CACHED)
+    prisfil_date = time.ctime(os.path.getmtime(PRISFIL_CACHED))
     return render_template('prisfil.html', entries=entries, prisfil_date=prisfil_date)
 
 def format_currency(value):
