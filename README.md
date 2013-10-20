@@ -12,7 +12,7 @@ This is documented in detail [on the wiki](https://github.com/captnswing/prisinf
 
 ### install the project
 
-After installing the prerquisits, you should be able to create a virtualenv for this project
+After installing the prerequisits, you should be able to create a virtualenv for this project
 
 	mkvirtualenv prisinfo
 
