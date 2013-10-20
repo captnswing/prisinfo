@@ -22,9 +22,7 @@ Bootstrap(app)
 def prisfil():
     entries = sorted(get_prisfil_data())
     prisfil_date = datetime.fromtimestamp(os.path.getmtime(PRISFIL_CACHED))
-    print prisfil_date
     date_difference = humanize_date_difference(prisfil_date, datetime.now())
-    print date_difference
     return render_template('prisfil.html',
                            entries=entries,
                            prisfil_date=prisfil_date,
