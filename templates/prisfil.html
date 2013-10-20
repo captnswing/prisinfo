@@ -33,7 +33,7 @@
                 type: 'numeric'
             });
             $.extend($.tablesorter.themes.bootstrap, {
-                table: 'table table-bordered table-condensed table-striped',
+                table: 'table table-bordered table-condensed',
                 header: 'bootstrap-header',
                 sortNone: 'bootstrap-icon-unsorted',
                 sortAsc: 'icon-chevron-up glyphicon glyphicon-chevron-up',
@@ -55,22 +55,36 @@
 {% endblock %}
 
 {% block navbar %}
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Prisfil Admin</a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Prisfil admin</a>
         </div>
-    </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+            <form class="navbar-form navbar-left" role="search">
+                <span>prisfil från: {{ prisfil_date.strftime('%b %d') }} ({{ date_difference }} gammal)</span>
+                <button type="submit" class="btn btn-default">uppdatera</button>
+            </form>
+            </ul>
+        </div>
+    <!-- /.navbar-collapse -->
+    </nav>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <p>Prisfil last updated: {{ prisfil_date }}</p>
                 <table class="tablesorter">
                     <thead>
                     <tr>

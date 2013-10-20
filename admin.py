@@ -4,8 +4,10 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from prisfilparser import get_prisfil_data
 import os
-import time
+from datetime import datetime
 from settings import PRISFIL_CACHED, CURRENCY_SYMBOL, CURRENCY_THOUSAND_SEPARATOR
+from util import humanize_date_difference
+
 
 # configuration
 DEBUG = True
@@ -19,9 +21,15 @@ Bootstrap(app)
 @app.route("/")
 def prisfil():
     entries = sorted(get_prisfil_data())
-    prisfil_date = time.ctime(os.path.getmtime(PRISFIL_CACHED))
-    return render_template('prisfil.html', entries=entries,
-                           prisfil_date=prisfil_date)
+    prisfil_date = datetime.fromtimestamp(os.path.getmtime(PRISFIL_CACHED))
+    print prisfil_date
+    date_difference = humanize_date_difference(prisfil_date, datetime.now())
+    print date_difference
+    return render_template('prisfil.html',
+                           entries=entries,
+                           prisfil_date=prisfil_date,
+                           date_difference=date_difference.replace(' ago', '')
+    )
 
 
 @app.context_processor
