@@ -42,14 +42,16 @@ def get_prisfil_data(*args):
     # get csv data
     csv_data = get_prisfil_csv(*args)
     # get rid of corrupted characters. "UnicodeDecodeError, invalid continuation byte"
-    csv_data = csv_data.replace('\xc3"', '"')
+    # https://github.com/captnswing/prisinfo/issues/1
+    #csv_data = csv_data.replace('\xc3"', '"')
     # parse csv data
     reader = UnicodeDictReader(StringIO(csv_data), delimiter='\t', quotechar='"')
     # extract interesting fields
     prisfil_data = []
     for i, row in enumerate(reader):
         if not row['price']:
-            row['price'] = 1
+            # https://github.com/captnswing/prisinfo/issues/2
+            continue
         prisfil_data.append((row['title'], float(row['price'])))
     return prisfil_data
 
