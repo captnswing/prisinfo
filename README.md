@@ -31,7 +31,7 @@ In the Terminal
 	git pull
 	pip install -r requirements.txt
 
-## Running the application
+## Running the application(s)
 
 ### the parser script
 
@@ -50,3 +50,11 @@ In the Terminal
 	python admin.py
 
 Then, open a browser, and surf to [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+
+### the xml-rpc test
+
+	workon prisinfo
+	cd ~/Development/prisinfo
+	export MAGENTO_API_USER=<insert/my/api/user>
+	export MAGENTO_API_KEY=<insert/my/api/key>
+	./magentoclient.py
