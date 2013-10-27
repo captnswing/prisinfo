@@ -10,18 +10,12 @@ import os
 import sys
 
 
-def xmlrpc_test(api_user, api_key):
-    proxy = xmlrpclib.ServerProxy(XMLRPC_URL)
-    sessionid = proxy.login(api_user, api_key)
-    resources = proxy.resources(sessionid)
-
-    for r in resources:
-        print r['name']
+def display_available_resources():
+    print "-" * 120
+    for r in mclient.resources(sessionid):
         for m in r['methods']:
             print "{:<50} {}".format(m['path'], m['title'])
-        print
-
-    proxy.endSession(sessionid)
+        print "-" * 120
 
 
 if __name__ == '__main__':
@@ -31,4 +25,13 @@ if __name__ == '__main__':
     except KeyError:
         print "environment variables MAGENTO_API_USER and MAGENTO_API_KEY need to be set."
         sys.exit(-1)
-    xmlrpc_test(api_user, api_key)
+
+    mclient = xmlrpclib.ServerProxy(XMLRPC_URL)
+    sessionid = mclient.login(api_user, api_key)
+
+    display_available_resources()
+    prodlist = mclient.call(sessionid, "catalog_product.list")
+    for p in prodlist:
+        print "{:<30} {}".format(p['sku'], p['name'].encode('utf8'))
+
+    mclient.endSession(sessionid)
