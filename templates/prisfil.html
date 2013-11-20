@@ -12,7 +12,8 @@
 
 {% block scripts %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='theme.bootstrap.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='theme.bootstrap.css') }}">
     <!-- tablesorter plugin -->
     <script src="{{ url_for('static', filename='jquery.tablesorter.min.js') }}"></script>
     <!-- tablesorter widget file - loaded after the plugin -->
@@ -58,31 +59,34 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target=".navbar-ex1-collapse">
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Prisfil admin</a>
+            <a class="navbar-brand" href="#">Magento</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav navbar-right">
-            <form class="navbar-form navbar-left" role="search">
-                <span>prisfil från: {{ prisfil_date.strftime('%b %d') }} ({{ date_difference }} gammal)</span>
-                <button type="submit" class="btn btn-default">uppdatera</button>
-            </form>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Prisfil</a></li>
+                <li><a href="#">Soap API</a></li>
             </ul>
         </div>
-    <!-- /.navbar-collapse -->
+        <!-- /.navbar-collapse -->
     </nav>
+
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
+            <form class="navbar-form navbar-left" role="search">
+                <span>prisfil från: {{ prisfil_date.strftime('%b %d') }} ({{ date_difference }} gammal)</span>
+                <button type="submit" class="btn btn-default">uppdatera</button>
+            </form>
             <div class="col-md-8">
                 <table class="tablesorter">
                     <thead>
