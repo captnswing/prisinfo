@@ -37,14 +37,26 @@ if __name__ == '__main__':
     # displaying list of all products
     #-----------------------------------------------
     prodlist = mclient.call(sessionid, "catalog_product.list")
-    for p in prodlist:
-        print u"{:<40} {}".format(p['sku'], p['name'])
+    for p in prodlist[:10]:
+        print p.keys()
+        print u"{:<40} {}".format(p["sku"], p["name"])
 
     #-----------------------------------------------
     # displaying product info
     #-----------------------------------------------
-    prodlist = mclient.call(sessionid, "catalog_product.info", ("50085703", "", "", "sku")  )
-    print json.dumps(prodlist, indent=4)
+    for p in prodlist[:10]:
+        prodinfo = mclient.call(sessionid, "catalog_product.info", (p["product_id"], "", "", "id"))
+        #print prodinfo.keys()
+        pcost = prodinfo.get("cost", 0)
+        if pcost:
+            pcost = float(pcost)
+        pprice = prodinfo.get("price", 0)
+        if pprice:
+            pprice = float(pprice)
+        margin = 0
+        if pprice and pcost:
+            margin = (pprice - pcost) / pprice * 100
+        print u"{:<10} {:<80} {:.>9.2f} {:.>9.2f} {:.>9.2f}".format(p["product_id"], p["name"], pcost or 0, pprice or 0, margin)
 
     #-----------------------------------------------
     # end session
