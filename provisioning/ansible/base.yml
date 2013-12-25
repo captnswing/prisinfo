@@ -1,0 +1,12 @@
+---
+# testing ansible
+
+- hosts: develop-vm
+  sudo: yes
+  tasks:
+   - name: install curl
+     apt: pkg=curl update_cache=yes
+
+   - name: extract archive
+     shell: tar xzf /vagrant/provisioning/magento-1.8.1.0.tar.gz chdir=/tmp creates=magento
+
