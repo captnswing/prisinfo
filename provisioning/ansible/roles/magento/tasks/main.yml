@@ -4,5 +4,21 @@
 - name: extract magento archive
   shell: tar xzf /tmp/magento-1.8.1.0.tar.gz chdir=/opt creates=/opt/magento/LICENSE.html
 
+- name: install php5-curl
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5-curl
+    - python-mysqldb
+
+- name: create magento db
+  mysql_db: name=magento state=present login_user=root login_password=mp109
+
 - name: fix permissions
-  file: path=/opt/magento owner=vagrant group=vagrant mode=0755 recurse=yes
+  file: path={{ item }} owner=www-data group=www-data mode=0755 recurse=yes
+  with_items:
+    - /opt/magento/app/etc
+    - /opt/magento/media
+    - /opt/magento/var
+
+- name: link magento into docroot
+  file: src=/opt/magento dest=/var/www/magento owner=root group=root state=link

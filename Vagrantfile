@@ -5,7 +5,6 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "http://box.puphpet.com/ubuntu-precise12042-x64-vbox43.box"
   # config.vm.hostname
 
-  config.vm.network "forwarded_port", guest: 80, host: 8888
   config.vm.network "private_network", ip: "192.168.33.100"
 
   # use NFS for /vagrant folder, speed on built in folder sharing is very bad
