@@ -1,0 +1,10 @@
+---
+# testing ansible
+
+- hosts: develop-vm
+  user: vagrant
+  sudo: yes
+
+  roles:
+    - lamp
+    - magento
