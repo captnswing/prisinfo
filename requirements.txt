@@ -1,1 +1,6 @@
 Flask-Bootstrap
+ansible
+paramiko
+PyYAML
+jinja2
+httplib2
