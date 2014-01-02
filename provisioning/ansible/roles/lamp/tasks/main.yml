@@ -9,15 +9,14 @@
   copy: src=debconf_selections dest=/tmp/debconf_selections
 
 - name: set up debconf with selections
-  command: debconf-set-selections /tmp/debconf_selections
+  command: debconf-set-selections /tmp/debconf_selections creates=/usr/sbin/apache2ctl
 
 # http://crosswire.org/~jmarsden/talks/lamp-install/lamp-install.txt
 - name: install lamp-server with tasksel
-  command: tasksel install lamp-server
+  command: tasksel install lamp-server creates=/usr/sbin/apache2ctl
 
 - name: install phpmyadmin
   apt: pkg=phpmyadmin state=latest
 
 - name: copy info.php
   copy: src=info.php dest=/var/www/info.php
-

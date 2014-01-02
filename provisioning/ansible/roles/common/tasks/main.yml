@@ -4,7 +4,7 @@
 - name: update all packages to the latest version
   apt: upgrade=full
 
-- name: install curl
+- name: install curl and screen
   apt: pkg={{ item }} state=latest
   with_items:
     - curl
