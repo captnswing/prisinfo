@@ -1,0 +1,7 @@
+mysql-server-5.5 mysql-server/root_password password mp109
+mysql-server-5.5 mysql-server/root_password_again password mp109
+phpmyadmin phpmyadmin/app-password-confirm password
+phpmyadmin phpmyadmin/dbconfig-install boolean true
+phpmyadmin phpmyadmin/mysql/admin-pass password mp109
+phpmyadmin phpmyadmin/mysql/app-pass password
+phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2

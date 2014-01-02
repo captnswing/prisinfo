@@ -3,7 +3,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu-precise12042-x64-vbox43"
   config.vm.box_url = "http://box.puphpet.com/ubuntu-precise12042-x64-vbox43.box"
-  # config.vm.hostname
+  config.vm.hostname = "magento.example.com"
 
   config.vm.network "private_network", ip: "192.168.33.100"
 
@@ -16,9 +16,17 @@ Vagrant.configure("2") do |config|
     vbox.customize ["modifyvm", :id, "--cpuexecutioncap", 90]
   end
 
-  config.vm.provision :ansible do |ansible|
-    ansible.playbook = "provisioning/ansible/site.yml"
-    ansible.inventory_path = "provisioning/ansible/hosts"
-    ansible.verbose = "v"
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = "provisioning/puppet"
+    puppet.manifest_file  = "site.pp"
+    puppet.module_path = "provisioning/puppet/modules"
+    puppet.options = "--verbose --debug"
   end
+
+#  config.vm.provision :ansible do |ansible|
+#    ansible.playbook = "provisioning/ansible/site.yml"
+#    ansible.inventory_path = "provisioning/ansible/hosts"
+#    ansible.verbose = "v"
+#  end
+
 end
