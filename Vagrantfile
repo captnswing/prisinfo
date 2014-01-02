@@ -14,13 +14,14 @@ Vagrant.configure("2") do |config|
     vbox.customize ["modifyvm", :id, "--memory", 1024]
     vbox.customize ["modifyvm", :id, "--cpus", 2]
     vbox.customize ["modifyvm", :id, "--cpuexecutioncap", 90]
+    vbox.customize ["modifyvm", :id, "--name", "magento"]
   end
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "provisioning/puppet"
     puppet.manifest_file  = "site.pp"
     puppet.module_path = "provisioning/puppet/modules"
-    puppet.options = "--verbose --debug"
+    puppet.options = "--verbose --debug --pluginsync"
   end
 
 #  config.vm.provision :ansible do |ansible|

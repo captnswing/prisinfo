@@ -7,7 +7,9 @@ node 'magento.example.com' {
   }
   class { 'lamp':
   }
+  class { 'mysql::server':
+  }
   class { 'magento':
-    require => Class['lamp']
+    require => [Class['lamp'], Class['mysql::server']]
   }
 }

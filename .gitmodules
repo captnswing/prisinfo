@@ -1,0 +1,6 @@
+[submodule "provisioning/puppet/modules/stdlib"]
+	path = provisioning/puppet/modules/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib
+[submodule "provisioning/puppet/modules/mysql"]
+	path = provisioning/puppet/modules/mysql
+	url = https://github.com/puppetlabs/puppetlabs-mysql
