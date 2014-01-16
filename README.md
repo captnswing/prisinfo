@@ -14,22 +14,22 @@ This is documented in detail [on the wiki](https://github.com/captnswing/prisinf
 
 After installing the prerequisits, you should be able to create a virtualenv for this project
 
-	mkvirtualenv prisinfo
+    mkvirtualenv prisinfo
 
 Then, check out the project code from github
 
-	cd ~/Development
-	git clone https://github.com/captnswing/prisinfo.git
-	pip install -r requirements.txt
+    cd ~/Development
+    git clone https://github.com/captnswing/prisinfo.git
+    pip install -r requirements.txt
 
 ## Update the code
 
 In the Terminal
 
-	workon prisinfo
-	cd ~/Development/prisinfo
-	git pull
-	pip install -r requirements.txt
+    workon prisinfo
+    cd ~/Development/prisinfo
+    git pull
+    pip install -r requirements.txt
 
 ## Running the application(s)
 
@@ -37,24 +37,24 @@ In the Terminal
 
 In the Terminal
 
-	workon prisinfo
-	cd ~/Development/prisinfo
-	./prisfilparser.py
+    workon prisinfo
+    cd ~/Development/prisinfo
+    ./prisfilparser.py
 
 ### the admin GUI
 
 In the Terminal
 
-	workon prisinfo
-	cd ~/Development/prisinfo
-	python admin.py
+    workon prisinfo
+    cd ~/Development/prisinfo
+    python admin.py
 
 Then, open a browser, and surf to [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 ### the xml-rpc test
 
-	workon prisinfo
-	cd ~/Development/prisinfo
-	export MAGENTO_API_USER=<insert/my/api/user>
-	export MAGENTO_API_KEY=<insert/my/api/key>
-	./magentoclient.py
+    workon prisinfo
+    cd ~/Development/prisinfo
+    export MAGENTO_API_USER=<insert/my/api/user>
+    export MAGENTO_API_KEY=<insert/my/api/key>
+    ./magentoclient.py
